@@ -55,4 +55,11 @@ class UserTest < ActiveSupport::TestCase
 		assert_not @user.valid?
 	end
 
+	test "email should be downcased before DB save" do
+		mixed_case_email = "Sil@Demmer.Com"
+		@user.email = mixed_case_email
+		@user.save
+		assert_equal mixed_case_email.downcase, @user.reload.email
+	end
+
 end
